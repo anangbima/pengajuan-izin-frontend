@@ -7,6 +7,9 @@ import VerifikatorLayout from "../components/layouts/VerifikatorLayout";
 import UserLayout from "../components/layouts/UserLayout";
 import SignUpPage from "../pages/auth/SignUpPage";
 import NotVerifyPage from "../pages/auth/NotVerifyPage";
+import IndexAdminPage from "../pages/admin/IndexAdminPage";
+import UserAdminPage from "../pages/admin/UserAdminPage";
+import IzinAdminPage from "../pages/admin/IzinAdminPage";
 
 const router = createBrowserRouter([
   {
@@ -40,11 +43,20 @@ const router = createBrowserRouter([
         children : [
           {
             index : true,
+            element : <IndexAdminPage/>
+          },
+          {
+            path : 'user',
+            element : <UserAdminPage/>
+          },
+          {
+            path : 'izin',
+            element : <IzinAdminPage/>
           }
         ]
       }, 
       {
-        path : '/verivikator',
+        path : '/verifikator',
         element : <VerifikatorLayout/>,
         children : [
           {

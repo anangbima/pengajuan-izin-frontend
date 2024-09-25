@@ -9,21 +9,19 @@ const AuthLayout = () => {
   const {user, setUser} = useAuth();
 
   if (user) {
-    if (user) {
-      if (user['role'] == 'admin') {
-        return <Navigate to ='/admin'/>
-      }
+    if (user.user['role'] == 'admin') {
+      return <Navigate to ='/admin'/>
+    }
 
-      if (user['role'] == 'verifikator') {
-        return <Navigate to ='/verifikator'/>
-      }
+    if (user.user['role'] == 'verifikator') {
+      return <Navigate to ='/verifikator'/>
+    }
 
-      if (user['role'] == 'user') {
-        if (user['status'] == 'not verify') {
-          return <Navigate to ='not-verify'/>
-        }
-        return <Navigate to ='/user'/>
+    if (user.user['role'] == 'user') {
+      if (user.user['status'] == 'not verify') {
+        return <Navigate to ='not-verify'/>
       }
+      return <Navigate to ='/user'/>
     }
   }
 

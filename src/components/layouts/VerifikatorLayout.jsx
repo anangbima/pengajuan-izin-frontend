@@ -11,8 +11,8 @@ const VerifikatorLayout = () => {
 
   return (
     <div>
-      Verifikator
-        <Outlet/>
+      
+      <Outlet/>
     </div>
   )
 }

@@ -3,6 +3,7 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axiosClient from '../../api/axios-client'
 import { useAuth } from '../../context/AuthContext'
+import UserForm from '../../components/forms/UserForm'
 
 const SignUpPage = () => {
   const { user, setUser, csrfToken } = useAuth();
@@ -43,67 +44,7 @@ const SignUpPage = () => {
       </Typography>
 
       <form onSubmit={_handleSignUp}>
-        <TextField
-          fullWidth
-          name='name'
-          id='name'
-          label='Name'
-          variant='outlined'
-          sx={{
-            mb: 3
-          }}
-          type='text'
-        />
-
-        <TextField
-          fullWidth
-          name='username'
-          id='username'
-          label='Username'
-          variant='outlined'
-          sx={{
-            mb: 3
-          }}
-          type='text'
-        />
-
-        <TextField
-          fullWidth
-          name='email'
-          id='email'
-          label='Email'
-          variant='outlined'
-          sx={{
-            mb: 3
-          }}
-          type='email'
-        />
-
-        <TextField
-          fullWidth
-          name='password'
-          id='password'
-          label='Password'
-          variant='outlined'
-          sx={{
-            mb: 3
-          }}
-          type='password'
-          autoComplete='on'
-        />
-
-        <TextField
-          fullWidth
-          name='password_confirmation'
-          id='password_confirmation'
-          label='Password Confirmation'
-          variant='outlined'
-          sx={{
-            mb: 3
-          }}
-          type='password'
-          autoComplete='on'
-        />
+        <UserForm/>
 
         <Button
           fullWidth

@@ -25,7 +25,7 @@ const SignInPage = () => {
       .then(({ data }) => {
         console.log('response login ', data)
         if(data.user['status'] != 'not verify') {
-          setUser(data.user)
+          setUser(data)
         }else{
           navigate('/not-verify')
         }
