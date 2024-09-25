@@ -4,6 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 import axiosClient from '../../api/axios-client';
+import Sidebar from '../Sidebar';
 
 const VerifikatorLayout = () => {
   const {user} = useAuth();
@@ -29,13 +30,18 @@ const VerifikatorLayout = () => {
   }
 
   return (
-    <div>
-      <Link to={'/verifikator/user'}>User</Link>
+    <div className='admin-layout'>
+      {/* <Link to={'/admin/user'}>User</Link>
       <br />
-      <Link to={'/verifikator/izin'}>Izin</Link>
+      <Link to={'/admin/izin'}>Izin</Link>
       <br />
-      <Button onClick={handleLogout}>Logout</Button>
-      <Outlet/>
+      <Button onClick={handleLogout}>Logout</Button> */}
+
+      <Sidebar role={'verifikator'}/>
+
+      <div className='content-admin'>
+        <Outlet/>
+      </div>
     </div>
   )
 }

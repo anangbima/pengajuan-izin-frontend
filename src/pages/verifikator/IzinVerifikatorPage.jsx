@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useAuth } from '../../context/AuthContext'
 import axiosClient from '../../api/axios-client';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import Header from '../../components/Header';
 
 const IzinVerifikatorPage = () => {
   const {user} = useAuth();
@@ -28,7 +29,7 @@ const IzinVerifikatorPage = () => {
 
   return (
     <div>
-      <h3>Data Izin</h3>
+      <Header page='Izin'/>
 
       <TableContainer>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">

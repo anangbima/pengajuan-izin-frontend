@@ -45,7 +45,7 @@ const AdminLayout = () => {
       <br />
       <Button onClick={handleLogout}>Logout</Button> */}
 
-      <Sidebar/>
+      <Sidebar role={'admin'}/>
 
       <div className='content-admin'>
         <Outlet/>

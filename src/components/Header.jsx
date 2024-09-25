@@ -44,7 +44,7 @@ const Header = ({
         </div>
         
         <div className='title'>
-          <h1>{page}</h1>
+          <h2>{page}</h2>
 
           <Breadcrumbs
             aria-label="breadcrumb"
