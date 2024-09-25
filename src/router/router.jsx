@@ -10,6 +10,11 @@ import NotVerifyPage from "../pages/auth/NotVerifyPage";
 import IndexAdminPage from "../pages/admin/IndexAdminPage";
 import UserAdminPage from "../pages/admin/UserAdminPage";
 import IzinAdminPage from "../pages/admin/IzinAdminPage";
+import IndexVerifikatorPage from "../pages/verifikator/IndexVerifikatorPage";
+import UserVerifikatorPage from "../pages/verifikator/UserVerifikatorPage";
+import IzinVerifikatorPage from "../pages/verifikator/IzinVerifikatorPage";
+import IndexUserPage from "../pages/user/IndexUserPage";
+import IzinUserPage from "../pages/user/IzinUserPage";
 
 const router = createBrowserRouter([
   {
@@ -61,6 +66,15 @@ const router = createBrowserRouter([
         children : [
           {
             index : true,
+            element : <IndexVerifikatorPage/>
+          },
+          {
+            path : 'user',
+            element : <UserVerifikatorPage/>
+          },
+          {
+            path : 'izin',
+            element : <IzinVerifikatorPage/>
           }
         ]
       },
@@ -70,6 +84,11 @@ const router = createBrowserRouter([
         children : [
           {
             index : true,
+            element : <IndexUserPage/>
+          },
+          {
+            path : 'izin',
+            element : <IzinUserPage/>
           }
         ]
       }      

@@ -2,25 +2,15 @@ import React, { useEffect, useState } from 'react'
 import { useAuth } from '../../context/AuthContext'
 import axiosClient from '../../api/axios-client';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import UserForm from '../../components/forms/UserForm';
 
-const UserAdminPage = () => {
+const UserVerifikatorPage = () => {
   const {user} = useAuth();
 
-  const [maxWidth, setMaxWidth] = useState('sm');
-  const [fullWidth, setFullWidth] = useState(true);
-
   const [userData, setUserData] = useState([])
-  const [addDialog, setAddDialog] = useState(false); // Manage modal tambah
 
   useEffect(() => {
     getUser()
   }, [])
-
-  // Handle buka modal tambah
-	const handleAddDialog = () => {
-    setAddDialog(!addDialog);
-	};
 
   const getUser = () => {
     axiosClient.get('/user', {
@@ -39,33 +29,6 @@ const UserAdminPage = () => {
   return (
     <div>
       <h3>Data User</h3>
-
-      <Button
-        variant='outlined'
-        onClick={handleAddDialog}
-      >
-        Add User
-      </Button>
-
-      <Dialog
-        fullWidth={fullWidth}
-        maxWidth={maxWidth}
-        open={addDialog}
-				onClose={handleAddDialog}
-      >
-        <DialogTitle>
-          Tambah User Verifikator
-        </DialogTitle>
-
-        <DialogContent>
-          <UserForm/>
-        </DialogContent>
-
-        <DialogActions>
-					<Button onClick={handleAddDialog}>Cancel</Button>
-					<Button type="submit">Add</Button>
-				</DialogActions>
-      </Dialog>
 
       <TableContainer>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -100,4 +63,4 @@ const UserAdminPage = () => {
   )
 }
 
-export default UserAdminPage
+export default UserVerifikatorPage

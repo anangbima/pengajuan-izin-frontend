@@ -4,6 +4,8 @@ import { useAuth } from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 import axiosClient from '../../api/axios-client';
+import Sidebar from '../Sidebar';
+import '../css/AdminLayout.scss'
 
 const AdminLayout = () => {
   const {user} = useAuth();
@@ -38,13 +40,18 @@ const AdminLayout = () => {
   }, [])
 
   return (
-    <div>
-      <Link to={'/admin/user'}>User</Link>
+    <div className='admin-layout'>
+      {/* <Link to={'/admin/user'}>User</Link>
       <br />
       <Link to={'/admin/izin'}>Izin</Link>
       <br />
-      <Button onClick={handleLogout}>Logout</Button>
-      <Outlet/>
+      <Button onClick={handleLogout}>Logout</Button> */}
+
+      <Sidebar/>
+
+      <div className='content-admin'>
+        <Outlet/>
+      </div>
     </div>
   )
 }

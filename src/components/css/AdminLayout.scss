@@ -1,0 +1,20 @@
+.admin-layout{
+    position: relative;
+    width: 100%;
+
+    .content-admin{
+        position: relative;
+        width: 100%;
+        padding: 20px 20px 20px 320px;
+        right: 0px;
+        overflow: hidden;
+    }
+}
+
+@media only screen and (max-width:992px){
+    .admin-layout{
+        .content-admin{
+            padding: 20px;
+        }
+    }
+}
