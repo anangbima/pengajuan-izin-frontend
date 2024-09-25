@@ -1,16 +1,23 @@
-import { createTheme } from "@mui/material"
+import { createTheme, CssBaseline, ThemeProvider } from "@mui/material"
 import { AuthProvider } from "../context/AuthContext"
 import { Outlet } from "react-router"
 
 const ThemeLayout = () => {
   const theme = createTheme({
     
+    typography: {
+      fontFamily: '"Roboto", sans-serif',
+    },
   })
 
   return (
     <>
       <AuthProvider>
-        <Outlet/>
+        <ThemeProvider theme={theme}>
+          <CssBaseline/>
+
+          <Outlet/>
+        </ThemeProvider>
       </AuthProvider>
     </>
   )

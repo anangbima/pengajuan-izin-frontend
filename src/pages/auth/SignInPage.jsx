@@ -1,15 +1,17 @@
-import { Button, TextField } from '@mui/material'
+import { Box, Button, Stack, TextField, Typography } from '@mui/material'
 import React from 'react'
 import axiosClient from '../../api/axios-client';
 import { useAuth } from '../../context/AuthContext';
+import { Link, useNavigate } from 'react-router-dom';
 
 const SignInPage = () => {
-  const {user, setUser, csrfToken} = useAuth();
+  const { user, setUser, csrfToken } = useAuth();
+  const navigate = useNavigate();
 
-  const _handleSignIn = async(e) => {
+  const _handleSignIn = async (e) => {
     e.preventDefault();
 
-    const {email, password} = e.target.elements;
+    const { email, password } = e.target.elements;
 
     const payload = {
       email: email.value,
@@ -20,10 +22,13 @@ const SignInPage = () => {
     // console.log('csrf token', csrfToken())
 
     axiosClient.post('/sign-in', payload)
-      .then(({data}) => {
+      .then(({ data }) => {
         console.log('response login ', data)
-        setUser(data.user)
-        
+        if(data.user['status'] != 'not verify') {
+          setUser(data.user)
+        }else{
+          navigate('/not-verify')
+        }
       })
       .catch((error) => {
         const response = error.response;
@@ -31,11 +36,14 @@ const SignInPage = () => {
   }
 
   return (
-    <div style={{
-      width: 500
-    }}>
-      <h1>Hai login dulu yuk</h1>
-      
+    <div >
+      <Typography
+        variant='h4'
+        mb={4}
+      >
+        Sign In
+      </Typography>
+
       <form onSubmit={_handleSignIn}>
         <TextField
           fullWidth
@@ -62,16 +70,24 @@ const SignInPage = () => {
           autoComplete='on'
         />
 
-          <Button
-            fullWidth
-            variant='contained'
-            sx={{
-              mt: 1
-            }}
-            type='submit'
-          >
-            Login
-          </Button>
+        <Button
+          fullWidth
+          variant='contained'
+          sx={{
+            mt: 2
+          }}
+          type='submit'
+        >
+          Submit
+        </Button>
+
+        <Box 
+          fullWidth 
+          mt={3}
+          textAlign={'center'}
+        >
+          <Typography>Dont have an account ? <Link to={'/sign-up'}>Sign up</Link></Typography>
+        </Box>
       </form>
     </div>
   )
