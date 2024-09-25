@@ -1,11 +1,17 @@
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material"
 import { AuthProvider } from "../context/AuthContext"
-import { Outlet } from "react-router"
+import { Outlet, useLocation } from "react-router"
 import { useState } from "react"
 import { ThemeContext } from "@emotion/react"
+import { LoadingContext } from "../context/LoadingContext"
+import LoadingBar from "react-top-loading-bar"
+import { SidebarAdminContext } from "../context/SidebarAdminContext"
 
 const ThemeLayout = () => {
   const [mode, setMode] = useState('light')
+  const [progress, setProgress] = useState(0)
+  const { pathname } = useLocation();
+  const [sidebarStatus, setSidebarStatus] = useState(false)
 
   const theme = createTheme({
     palette : {
@@ -64,11 +70,23 @@ const ThemeLayout = () => {
     <>
       <AuthProvider>
         <ThemeContext.Provider value={{mode, setMode}}>
-          <ThemeProvider theme={theme}>
-            <CssBaseline/>
+          <LoadingContext.Provider value={{progress, setProgress}}>
+            <SidebarAdminContext.Provider value={{sidebarStatus, setSidebarStatus}}>
+              <ThemeProvider theme={theme}>
+                <CssBaseline/>
 
-            <Outlet/>
-          </ThemeProvider>
+                {/* loading top bar */}
+                <LoadingBar 
+                    color="#00A761" 
+                    progress={progress} 
+                    onLoaderFinished={() => setProgress(0)} 
+                    shadow={false}
+                  />
+
+                <Outlet/>
+              </ThemeProvider>
+            </SidebarAdminContext.Provider>
+          </LoadingContext.Provider>
         </ThemeContext.Provider>
       </AuthProvider>
     </>

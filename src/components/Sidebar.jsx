@@ -106,8 +106,7 @@ const Sidebar = () => {
 
       <div className='header'>
         <div className='header-sidebar'>
-          {/* <img className='logo-admin' src={logo} alt="logo desa kanca" /> */}
-          Desa Kanca
+          Pengajuan Izin App
         </div>
 
         {/* <IconButton color='inherit'>
@@ -221,30 +220,6 @@ const Sidebar = () => {
 
           </Collapse>
 
-          {/* <ListItemButton
-            component={Link}
-            to='/admin/penduduk'
-            sx={ pageActive === 'penduduk' ? NavIsActive : NavIsNotActive }
-            onClick={() => setPageActive('penduduk')}
-          >
-            <ListItemIcon sx={{ minWidth: 46 }}>
-              <PersonIcon/>
-            </ListItemIcon>
-            <ListItemText primary="Penduduk" />
-          </ListItemButton>
-
-          <ListItemButton 
-            component={Link}
-            to='/admin/struktur-desa'
-            sx={ pageActive === 'struktur-desa' ? NavIsActive : NavIsNotActive }
-            onClick={() => setPageActive('struktur-desa')}
-          >
-            <ListItemIcon sx={{ minWidth: 46 }}>
-              <PolylineIcon/>
-            </ListItemIcon>
-            <ListItemText primary="Struktur Desa" />
-          </ListItemButton> */}
-
           {/* Tombol collapse untuk lembaga */}
           <ListItemButton onClick={handleLembaga} sx={ pageActive === 'lembaga' ? NavIsActive : NavIsNotActive }>
             <ListItemIcon sx={{ minWidth: 46 }}>
@@ -357,30 +332,6 @@ const Sidebar = () => {
             </List>
 
           </Collapse>
-
-          {/* <ListItemButton
-            component={Link}
-            to='/admin/berita'
-            sx={ pageActive === 'berita' ? NavIsActive : NavIsNotActive }
-            onClick={() => setPageActive('berita')}
-          >
-            <ListItemIcon sx={{ minWidth: 46 }}>
-              <NewspaperIcon/>
-            </ListItemIcon>
-            <ListItemText primary="Berita" />
-          </ListItemButton>
-          
-          <ListItemButton
-            component={Link}
-            to='/admin/galeri'
-            sx={ pageActive === 'galeri' ? NavIsActive : NavIsNotActive }
-            onClick={() => setPageActive('galeri')}
-          >
-            <ListItemIcon sx={{ minWidth: 46 }}>
-              <PhotoLibraryIcon/>
-            </ListItemIcon>
-            <ListItemText primary="Galeri" />
-          </ListItemButton> */}
         </List>
 
         <List 

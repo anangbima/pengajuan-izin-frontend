@@ -1,8 +1,9 @@
 import React from 'react'
+import Header from '../../components/Header'
 
 const IndexAdminPage = () => {
   return (
-    <div>IndexAdminPage</div>
+    <Header page='Dashboard'/>
   )
 }
 

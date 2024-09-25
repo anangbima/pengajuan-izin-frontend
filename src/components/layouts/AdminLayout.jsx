@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Navigate, Outlet, useNavigate } from 'react-router'
 import { useAuth } from '../../context/AuthContext';
-import { Link } from 'react-router-dom';
-import { Button } from '@mui/material';
 import axiosClient from '../../api/axios-client';
 import Sidebar from '../Sidebar';
 import '../css/AdminLayout.scss'
