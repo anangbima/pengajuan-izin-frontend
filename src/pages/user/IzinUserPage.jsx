@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useAuth } from '../../context/AuthContext';
 import axiosClient from '../../api/axios-client';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material';
 import IzinForm from '../../components/forms/IzinForm';
 import { CiEdit } from "react-icons/ci";
 import { FaRegEye } from "react-icons/fa6";
 import { MdOutlineDeleteOutline } from "react-icons/md";
+import { FaX } from "react-icons/fa6";
+import { grey, pink, red } from '@mui/material/colors';
 
 const IzinUserPage = () => {
   const {user} = useAuth();
@@ -17,11 +19,21 @@ const IzinUserPage = () => {
   const [addDialog, setAddDialog] = useState(false);
   const [editDialog, setEditDialog] = useState(false);
   const [deleteDialog, setDeleteDialog] = useState(false);
+  const [detailDialog, setDetailDialog] = useState(false);
+  const [cancelDialog, setCancelDialog] = useState(false);
+
+  const [detailIzin, setDetailIzin] = useState([]);
+  const [detailIzinUser, setDetailIzinUser] = useState([]);
+  const [detailIzinKomentar, setDetailIzinKomentar] = useState([]);
   const [id, setId] = useState('');
 
   const [judulValue, setJudulValue] = useState('');
   const [jenisValue, setJenisValue] = useState('');
   const [isiValue, setIsiValue] = useState('');
+
+  const [judulError, setJudulError] = useState('');
+  const [jenisError, setJenisError] = useState('');
+  const [isiError, setIsiError] = useState('');
 
   useEffect(() => {
     getIzin()
@@ -35,16 +47,31 @@ const IzinUserPage = () => {
   const handleEditDialog = (id) => {
     // setEditDialog(!editDialog);
     setId(id)
-    // getIzinbyId(id)
+    // getDetailIzin(id)
     if (editDialog === true) {
       setEditDialog(false)
     }else{
-      getIzinbyId(id)
+      getDetailIzin(id, 'forUpdate')
     }
 	};
 
+  const handleDetailDialog = (idValue) => {
+    setId(idValue)
+
+    if (detailDialog === true) {
+      setDetailDialog(false)
+    }else{
+      getDetailIzin(idValue, 'forDetail')
+    }
+  }
+
   const handltDeleteDialog = (id) => {
     setDeleteDialog(!deleteDialog);
+    setId(id)
+	};
+
+  const handltCancelDialog = (id) => {
+    setCancelDialog(!cancelDialog);
     setId(id)
 	};
 
@@ -62,7 +89,7 @@ const IzinUserPage = () => {
     })
   }
 
-  const getIzinbyId = (id) => {
+  const getDetailIzin = (id, _for) => {
     // console.log('iddIzin', id)
     axiosClient.get('/izin/'+id, {
       headers: {
@@ -70,14 +97,21 @@ const IzinUserPage = () => {
       }
     }).then(({data}) => {
 
+      setDetailIzin(data.izin)
+      setDetailIzinUser(data.izin.user)
+      setDetailIzinKomentar(data.izin.komentar)
+
       // setId(data.izin.id)
       setJudulValue(data.izin.judul)
       setJenisValue(data.izin.jenis)
       setIsiValue(data.izin.isi)
 
       // console.log('judul', data.izin.judul)
-
-      setEditDialog(true);
+      if(_for == 'forUpdate'){
+        setEditDialog(true);
+      }else{
+        setDetailDialog(true);
+      }
 
     }).catch((error) => {
       const response = error.response;
@@ -136,9 +170,14 @@ const IzinUserPage = () => {
                 getIzin()
               })
               .catch((error) => {
-                // menampilkan validasi
-                if (error.response && error.response.status === 422) {
-                  const message = error.response.data.message;
+                const response = error.response;
+
+                if (response.status == 422) {
+                  const message = error.response.data.errors;
+
+                  setJudulError(message.judul)
+                  setJenisError(message.jenis)
+                  setIsiError(message.isi)
                 }
               })
           }
@@ -149,7 +188,11 @@ const IzinUserPage = () => {
         </DialogTitle>
 
         <DialogContent>
-          <IzinForm/>
+          <IzinForm
+            judulError={judulError}
+            jenisError={jenisError}
+            isiError={isiError}
+          />
         </DialogContent>
 
         <DialogActions>
@@ -224,7 +267,7 @@ const IzinUserPage = () => {
             }
 
             // proses menambah data berita
-            axiosClient.put('/izin/'+id, payload, {
+            axiosClient.post('/update-izin/'+id, payload, {
               headers:{
                 "Content-Type": "multipart/form-data",
                 'Authorization': 'Bearer ' + user.token
@@ -252,6 +295,9 @@ const IzinUserPage = () => {
 
         <DialogContent>
           <IzinForm
+            judulError={judulError}
+            jenisError={jenisError}
+            isiError={isiError}
             judulValue={judulValue}
             jenisValue={jenisValue}
             isiValue={isiValue}
@@ -264,7 +310,90 @@ const IzinUserPage = () => {
 				</DialogActions>
       </Dialog>
 
-      <TableContainer>
+      {/* Dialog detail Izin */}
+      <Dialog
+        fullWidth={fullWidth}
+        maxWidth={'lg'}
+        open={detailDialog}
+				onClose={handleDetailDialog}
+      >
+        <DialogTitle>
+          Detail Izin
+        </DialogTitle>
+
+        <DialogContent>
+          <div>
+            {detailIzinUser.name}
+          </div>
+          <br />
+          <br />
+          <div>
+            {detailIzin.judul}
+          </div>
+          <Box sx={{ p: 2, border: '1px solid grey', mt: 2 }}>
+            {detailIzin.isi}
+          </Box>
+          <br />
+          <br />
+          <b>Komentar</b>
+          {detailIzinKomentar.map((k) => (
+            <Box sx={{ p: 2, mb: 3, background: '#F5F5F5', mt: 2 }}>
+              <Typography color='#BEBEBE' variant='caption'>{k.created_at}</Typography>
+              <Typography sx={{mt:1}}>{k.isi}</Typography>
+            </Box>
+          ))}
+        </DialogContent>
+
+      </Dialog>
+
+      {/* Dialog cancel izin */}
+      <Dialog
+        open={cancelDialog}
+        onClose={handltCancelDialog}
+        PaperProps={{
+          component: "form",
+          onSubmit: (e) => {
+            e.preventDefault();
+
+            const payload = {
+              status : 'dibatalkan' 
+            }
+
+            axiosClient.post('/update-status-izin/'+id, payload, {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                'Authorization': 'Bearer ' + user.token
+              },
+            })
+              .then(({data}) => {
+                // menutup dialog
+                handltCancelDialog();
+
+                // merefresh data
+                getIzin();
+              })
+              .catch((error) => {
+                const response = error.response;
+                console.log(response)
+              })
+          },
+        }}
+      >
+        <DialogTitle>Cancel Izin</DialogTitle>
+
+        <DialogContent>
+          <DialogContentText sx={{ mb: 3 }}>
+            Apakah Yakin Ingin Meembatalkan Pengajuan Izin ?
+          </DialogContentText>
+        </DialogContent>
+
+        <DialogActions>
+          <Button onClick={handltCancelDialog}>Cancel</Button>
+          <Button type="submit">Yes</Button>
+        </DialogActions>
+      </Dialog>
+
+      <TableContainer sx={{mt: 3}}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
@@ -272,7 +401,9 @@ const IzinUserPage = () => {
               <TableCell align="right">Jenis</TableCell>
               <TableCell align="right">Isi</TableCell>
               <TableCell align="right">Status</TableCell>
-              <TableCell align="right">Action</TableCell>
+              <TableCell align="right"></TableCell>
+              <TableCell align="right"></TableCell>
+              <TableCell align="right"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -286,17 +417,31 @@ const IzinUserPage = () => {
                 <TableCell align="right">{izin.isi}</TableCell>
                 <TableCell align="right">{izin.status}</TableCell>
                 <TableCell align="right">
-                  <IconButton >
+                  <IconButton onClick={() => handleDetailDialog(izin.id)}>
                     <FaRegEye />
                   </IconButton>
-
-                  <IconButton onClick={() => handleEditDialog(izin.id)}>
-                    <CiEdit />
-                  </IconButton>
+                </TableCell>
+                <TableCell align="right">
+                  {izin.status != 'belum diproses' || 
+                    izin.status == 'direvisi' ||
+                    <IconButton onClick={() => handleEditDialog(izin.id)}>
+                      <CiEdit />
+                    </IconButton>
+                  }
                   
                   <IconButton onClick={() => handltDeleteDialog(izin.id)}>
                     <MdOutlineDeleteOutline />
                   </IconButton>
+                </TableCell>
+                <TableCell>
+                  {izin.status != 'belum diproses' ||
+                    izin.status == 'dibatalkan' ||
+                    
+                      <IconButton onClick={() => handltCancelDialog(izin.id)}>
+                      <FaX size={16} />
+                      </IconButton>
+                    
+                  }
                 </TableCell>
               </TableRow>
             ))}

@@ -1,10 +1,11 @@
 import React from 'react'
-import { Navigate, Outlet } from 'react-router'
+import { Navigate, Outlet, useNavigate } from 'react-router'
 import { useAuth } from '../../context/AuthContext'
 import { Link } from 'react-router-dom';
-import { Button, Container } from '@mui/material';
+import { Button, Container, IconButton } from '@mui/material';
 import axiosClient from '../../api/axios-client';
 import '../css/UserLayout.scss'
+import { IoMdLogOut } from "react-icons/io";
 
 const UserLayout = () => {
   const {user} = useAuth();
@@ -12,6 +13,8 @@ const UserLayout = () => {
   if (!user) {
     return <Navigate to='/'/>
   }
+
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     axiosClient.post('/sign-out', {} ,{
@@ -21,7 +24,7 @@ const UserLayout = () => {
     })
       .then(({data}) => {
         localStorage.removeItem('user')
-        navigate('/')
+        window.location.reload()
       })
       .catch((error) => {
         const response = error.response;
@@ -34,7 +37,21 @@ const UserLayout = () => {
       {/* <Link to={'/user/izin'}>Izin</Link>
       <br />
       <Button onClick={handleLogout}>Logout</Button> */}
+      
       <Container>
+        <div className='navbar'>
+          <h3>
+            Pengajuan Izin App
+          </h3>
+
+          <div>
+            <Link to={'/user/profil'}>{user.user.name}</Link>
+            <IconButton onClick={handleLogout} sx={{marginLeft: 1}}>
+              <IoMdLogOut />
+            </IconButton>
+          </div>
+        </div>
+
         <Outlet/>
       </Container>
       

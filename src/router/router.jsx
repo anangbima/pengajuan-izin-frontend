@@ -15,6 +15,7 @@ import UserVerifikatorPage from "../pages/verifikator/UserVerifikatorPage";
 import IzinVerifikatorPage from "../pages/verifikator/IzinVerifikatorPage";
 import IndexUserPage from "../pages/user/IndexUserPage";
 import IzinUserPage from "../pages/user/IzinUserPage";
+import ProfilUserPage from "../pages/user/ProfilUserPage";
 
 const router = createBrowserRouter([
   {
@@ -89,7 +90,11 @@ const router = createBrowserRouter([
           {
             path : 'izin',
             element : <IzinUserPage/>
-          }
+          },
+          {
+            path : 'profil',
+            element : <ProfilUserPage/>
+          },
         ]
       }      
     ]

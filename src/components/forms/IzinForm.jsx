@@ -23,6 +23,8 @@ const IzinForm = ({
         }}
         type='text'
         defaultValue={judulValue ? judulValue : ''}
+        error={judulError ? true : false}
+        helperText={judulError || ""}
       />
 
       <TextField
@@ -39,6 +41,8 @@ const IzinForm = ({
         rows={4}
         maxRows={10}
         defaultValue={isiValue ? isiValue : ''}
+        error={isiError ? true : false}
+        helperText={isiError || ""}
       />
 
       <FormControl
@@ -55,6 +59,8 @@ const IzinForm = ({
           name='jenis'
           label='jenis'
           defaultValue={jenisValue ? jenisValue : 'cuti'}
+          error={jenisError ? true : false}
+          helperText={jenisError || ""}
           // onChange={}
         >
           <MenuItem value='cuti'>Cuti</MenuItem>

@@ -11,22 +11,6 @@ const AdminLayout = () => {
 
   const navigate = useNavigate()
 
-  const handleLogout = () => {
-    axiosClient.post('/sign-out', {} ,{
-      headers: {
-        'Authorization': 'Bearer ' + user.token
-      }
-    })
-      .then(({data}) => {
-        localStorage.removeItem('user')
-        navigate('/')
-      })
-      .catch((error) => {
-        const response = error.response;
-        console.log(response)
-      })
-  }
-
   if (!user) {
     return <Navigate to='/'/>
   }
