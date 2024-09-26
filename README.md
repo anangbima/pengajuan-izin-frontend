@@ -1,8 +1,26 @@
-# React + Vite
+# Pengajuan Izin App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Deskripsi Singkat
+Frontend untuk aplikasi Pengajuan Izin App backend
 
-Currently, two official plugins are available:
+## Teknologi yang Digunakan
+* React 18
+* Vite 3
+* JavaScript
+* Material Ui
+* Scss
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Cara Memulai
+1. Clone Repository
+2. Install npm
+   ```
+    npm install
+   ```
+4. Copy file .env.example
+5. Konfigurasi file .env
+6. Jalankan aplikasi
+   ```
+    npm run dev
+   ```
+7. Jalankan bersandingan dengan backend
+
