@@ -1,5 +1,5 @@
 import { Box, Button, Stack, TextField, Typography } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import axiosClient from '../../api/axios-client';
 import { useAuth } from '../../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
@@ -7,6 +7,9 @@ import { Link, useNavigate } from 'react-router-dom';
 const SignInPage = () => {
   const { user, setUser, csrfToken } = useAuth();
   const navigate = useNavigate();
+
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
 
   const _handleSignIn = async (e) => {
     e.preventDefault();
@@ -32,6 +35,13 @@ const SignInPage = () => {
       })
       .catch((error) => {
         const response = error.response;
+
+        if (response.status == 422) {
+          const message = error.response.data.errors;
+
+          setEmailError(message.email)
+          setPasswordError(message.password)
+        }
       })
   }
 
@@ -55,6 +65,8 @@ const SignInPage = () => {
             mb: 3
           }}
           type='email'
+          error={emailError ? true : false}
+          helperText={emailError || ''}
         />
 
         <TextField
@@ -68,6 +80,8 @@ const SignInPage = () => {
           }}
           type='password'
           autoComplete='on'
+          error={passwordError || false}
+          helperText={passwordError || ''}
         />
 
         <Button

@@ -56,7 +56,7 @@ const Navbar = () => {
     })
       .then(({data}) => {
         localStorage.removeItem('user')
-        navigate('/')
+        navigate('/sign-in')
       })
       .catch((error) => {
         const response = error.response;

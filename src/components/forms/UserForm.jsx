@@ -1,7 +1,13 @@
 import { TextField } from '@mui/material'
 import React from 'react'
 
-const UserForm = () => {
+const UserForm = ({
+  usernameError,
+  nameError,
+  emailError,
+  passwordError,
+  passwordConfirmationError,
+}) => {
   return (
     <>
       <TextField
@@ -11,9 +17,12 @@ const UserForm = () => {
           label='Name'
           variant='outlined'
           sx={{
-            mb: 3
+            mb: 3,
+            mt: 3
           }}
           type='text'
+          error={nameError ? true : false}
+          helperText={nameError || ""}
         />
 
         <TextField
@@ -26,6 +35,8 @@ const UserForm = () => {
             mb: 3
           }}
           type='text'
+          error={usernameError ? true : false}
+          helperText={usernameError || ""}
         />
 
         <TextField
@@ -38,6 +49,8 @@ const UserForm = () => {
             mb: 3
           }}
           type='email'
+          error={emailError ? true : false}
+          helperText={emailError || ""}
         />
 
         <TextField
@@ -51,6 +64,8 @@ const UserForm = () => {
           }}
           type='password'
           autoComplete='on'
+          error={passwordError ? true : false}
+          helperText={passwordError || ""}
         />
 
         <TextField
@@ -64,6 +79,8 @@ const UserForm = () => {
           }}
           type='password'
           autoComplete='on'
+          error={passwordConfirmationError ? true : false}
+          helperText={passwordConfirmationError || ""}
         />
     </>
   )

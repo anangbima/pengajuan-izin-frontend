@@ -1,5 +1,5 @@
 import { Box, Button, TextField, Typography } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axiosClient from '../../api/axios-client'
 import { useAuth } from '../../context/AuthContext'
@@ -8,6 +8,13 @@ import UserForm from '../../components/forms/UserForm'
 const SignUpPage = () => {
   const { user, setUser, csrfToken } = useAuth();
   const navigate = useNavigate();
+
+  const [nameError, setNameError] = useState('');
+  const [usernameError, setUsernameError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [passwordConfirmationError, setPasswordConfirmationError] = useState('');
+
 
   const _handleSignUp = async (e) => {
     e.preventDefault();
@@ -31,6 +38,16 @@ const SignUpPage = () => {
       })
       .catch((error) => {
         const response = error.response;
+
+        if (response.status == 422) {
+          const message = error.response.data.errors;
+
+          setNameError(message.name)
+          setUsernameError(message.username)
+          setEmailError(message.email)
+          setPasswordError(message.password)
+          setPasswordConfirmationError(message.password_confirmation)
+        }
       })
   }
 
@@ -44,7 +61,13 @@ const SignUpPage = () => {
       </Typography>
 
       <form onSubmit={_handleSignUp}>
-        <UserForm/>
+        <UserForm
+          nameError={nameError}
+          usernameError={usernameError}
+          emailError={emailError}
+          passwordError={passwordError}
+          passwordConfirmationError={passwordConfirmationError}
+        />
 
         <Button
           fullWidth

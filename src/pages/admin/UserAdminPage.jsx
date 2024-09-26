@@ -16,6 +16,12 @@ const UserAdminPage = () => {
   const [roleDialog, setRoleDialog] = useState(false); 
   const [id, setId] = useState(0);
 
+  const [nameError, setNameError] = useState('');
+  const [usernameError, setUsernameError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [passwordConfirmationError, setPasswordConfirmationError] = useState('');
+
   useEffect(() => {
     getUser()
   }, [])
@@ -95,9 +101,16 @@ const UserAdminPage = () => {
                 getUser()
               })
               .catch((error) => {
-                // menampilkan validasi
-                if (error.response && error.response.status === 422) {
-                  const message = error.response.data.message;
+                const response = error.response;
+
+                if (response.status == 422) {
+                  const message = error.response.data.errors;
+
+                  setNameError(message.name)
+                  setUsernameError(message.username)
+                  setEmailError(message.email)
+                  setPasswordError(message.password)
+                  setPasswordConfirmationError(message.password_confirmation)
                 }
               })
           }
@@ -108,7 +121,13 @@ const UserAdminPage = () => {
         </DialogTitle>
 
         <DialogContent>
-          <UserForm/>
+          <UserForm
+            nameError={nameError}
+            usernameError={usernameError}
+            emailError={emailError}
+            passwordError={passwordError}
+            passwordConfirmationError={passwordConfirmationError}
+          />
         </DialogContent>
 
         <DialogActions>

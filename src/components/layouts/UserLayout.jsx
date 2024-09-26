@@ -2,8 +2,9 @@ import React from 'react'
 import { Navigate, Outlet } from 'react-router'
 import { useAuth } from '../../context/AuthContext'
 import { Link } from 'react-router-dom';
-import { Button } from '@mui/material';
+import { Button, Container } from '@mui/material';
 import axiosClient from '../../api/axios-client';
+import '../css/UserLayout.scss'
 
 const UserLayout = () => {
   const {user} = useAuth();
@@ -29,11 +30,14 @@ const UserLayout = () => {
   }
 
   return (
-    <div>
-      <Link to={'/user/izin'}>Izin</Link>
+    <div className='user-layout'>
+      {/* <Link to={'/user/izin'}>Izin</Link>
       <br />
-      <Button onClick={handleLogout}>Logout</Button>
-      <Outlet/>
+      <Button onClick={handleLogout}>Logout</Button> */}
+      <Container>
+        <Outlet/>
+      </Container>
+      
     </div>
   )
 }
